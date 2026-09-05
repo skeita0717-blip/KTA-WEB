@@ -47,12 +47,16 @@
     --color-accent-dark: #CE6E38;
     --color-line: #06C755;        /* LINE公式カラー（ボタン用途のみ） */
     --color-border: #E5E0D6;
+    --color-ink: #211F1B;         /* ブランドマーク・ロゴ専用の深い黒（本文色より一段濃い） */
 
     --font-base: "Hiragino Sans", "Yu Gothic", "Noto Sans JP", "Helvetica Neue", Arial, sans-serif;
 
     --radius-s: 8px;
     --radius-m: 16px;
     --radius-l: 24px;
+    --radius-brand: 10px;         /* ブランド／情報構造カード用のシャープめの角丸（CTAの丸みとは別枠） */
+
+    --tracking-brand: 0.12em;     /* ロゴタイプの間隔感をnav・番号・eyebrowに反復させる共通値 */
 
     --shadow-s: 0 2px 8px rgba(44, 42, 38, 0.06);
     --shadow-m: 0 8px 24px rgba(44, 42, 38, 0.08);
@@ -131,7 +135,7 @@
   .section-eyebrow{
     display: inline-block;
     font-size: 0.8rem;
-    letter-spacing: 0.12em;
+    letter-spacing: var(--tracking-brand);
     color: var(--color-primary);
     font-weight: 700;
     margin-bottom: 12px;
@@ -180,6 +184,7 @@
     background: transparent;
     color: var(--color-primary);
     border: 1.5px solid var(--color-primary);
+    border-radius: var(--radius-brand); /* CTAの丸みとは別枠：セカンダリ導線はブランド側のシャープさに寄せる */
   }
   .btn-outline:hover{ background: var(--color-primary); color: #fff; }
 
@@ -208,26 +213,41 @@
     justify-content: space-between;
   }
   .logo{
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     font-weight: 800;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.04em;
     color: var(--color-primary-dark);
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
   }
-  .logo-mark{
+
+  /* ============================================================
+     ブランドマーク（KSモノグラム）
+     ・Header / Hero / Profile / Footer で共通使用
+     ・線の色は currentColor 継承。配置先で color を指定する
+     ============================================================ */
+  .brand-mark{
+    flex-shrink: 0;
+    display: block;
+  }
+  .brand-mark path{
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 7.5;
+    stroke-linecap: round;
+  }
+  .logo .brand-mark{
     width: 30px;
     height: 30px;
-    border-radius: 8px;
-    background: var(--color-primary);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.95rem;
-    font-weight: 800;
-    flex-shrink: 0;
+    color: var(--color-ink);
+  }
+  .hero-brand-mark{
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    color: var(--color-ink);
+    margin-bottom: 18px;
   }
 
   .nav-pc{
@@ -240,6 +260,7 @@
   .nav-pc a{
     font-size: 0.92rem;
     font-weight: 600;
+    letter-spacing: 0.03em;
     color: var(--color-text);
     position: relative;
     padding: 4px 2px;
@@ -380,15 +401,17 @@
   .hero-visual{
     position: relative;
     width: 100%;
-    max-width: 460px;
+    max-width: 420px;
     /* 右下にスマホ画面を重ねるための余白（枠がはみ出さないよう padding で確保） */
     padding: 0 15% 15% 0;
   }
 
   /* ----------------------------------------------------------
-     KEITA STUDIOの世界観に合わせたオリジナルのダミーWebサイト画面
-     （実写素材ではなく、CSSのみで組んだワイヤーフレーム風モックアップ）
-     PC画面＋スマホ画面で「実際に制作している」ことを伝える
+     Heroビジュアル：KEITA STUDIO自身のサイトを簡略化したプレビュー
+     ・実際のKSロゴ／配色／CTAデザインのみを使い、要素数は最小限に絞る
+     ・「このサイト自体がKEITA STUDIOの制作物である」ことを
+       さりげなく伝えるための構成。主役はあくまでコピーとCTA側であり、
+       このビジュアルは控えめな余白を保つ
      ---------------------------------------------------------- */
   .mockup-browser{
     width: 100%;
@@ -396,7 +419,7 @@
     background: var(--color-surface);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-l);
-    box-shadow: var(--shadow-m);
+    box-shadow: var(--shadow-s);
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -420,145 +443,48 @@
   .mockup-browser__body{
     flex: 1;
     min-height: 0;
-    padding: 10px 14px;
+    padding: 18px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    justify-content: center;
+    gap: 16px;
   }
-  .mockup-browser__nav{
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    gap: 7px;
-  }
-  .mockup-browser__logo{
+  .mockup-real-logo{
     width: 16px;
     height: 16px;
-    border-radius: 5px;
-    background: var(--color-primary);
-    flex-shrink: 0;
+    color: var(--color-ink);
   }
-  .mockup-browser__navlink{
-    height: 6px;
-    width: 24px;
-    border-radius: 3px;
-    background: var(--color-border);
-  }
-  .mockup-browser__navcta{
-    margin-left: auto;
-    width: 36px;
-    height: 13px;
-    border-radius: 999px;
-    background: var(--color-accent);
-    flex-shrink: 0;
-  }
-  .mockup-hero{
-    flex-shrink: 0;
-    display: flex;
-    align-items: flex-start;
-    gap: 8px;
-  }
-  .mockup-hero__text{
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .mockup-eyebrow{
+  .mockup-real-title{
     display: block;
-    width: 30px;
-    height: 5px;
-    border-radius: 3px;
-    background: rgba(232, 131, 74, 0.5);
-    margin-bottom: 1px;
+    height: 13px;
+    width: 62%;
+    border-radius: 6px;
+    background: var(--color-ink);
   }
-  .mockup-hero__media{
-    flex-shrink: 0;
-    width: 26%;
-    aspect-ratio: 1 / 1;
-    border-radius: var(--radius-s);
-    background: var(--color-bg-soft);
-    border: 1px solid var(--color-border);
+  .mockup-real-cta{
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 7px 13px;
+    border-radius: 999px;
+    background: var(--color-primary);
+    color: #fff;
+    font-size: 8px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .mockup-real-cta--phone{
+    align-self: flex-start;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-  .mockup-hero__media-icon{
-    width: 34%;
-    height: 34%;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
-    background: rgba(47, 111, 94, 0.3);
-  }
-  .mockup-bar{
-    display: block;
-    height: 7px;
-    border-radius: 4px;
-    background: rgba(44, 42, 38, 0.14);
-  }
-  .mockup-bar--title{ height: 10px; width: 88%; border-radius: 5px; background: rgba(44, 42, 38, 0.32); }
-  .mockup-bar--title-short{ height: 10px; width: 60%; border-radius: 5px; background: rgba(44, 42, 38, 0.32); }
-  .mockup-bar--text{ width: 70%; }
-  .mockup-cta-pill{
-    margin-top: 2px;
-    width: 56px;
-    height: 14px;
-    border-radius: 999px;
     background: var(--color-primary);
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding-right: 6px;
+    color: #fff;
   }
-  .mockup-cta-pill__arrow{
-    width: 5px;
-    height: 5px;
-    border-top: 1.5px solid #fff;
-    border-right: 1.5px solid #fff;
-    transform: rotate(45deg);
-  }
-  .mockup-cards{
-    margin-top: auto;
-    display: flex;
-    gap: 6px;
-  }
-  .mockup-card{
-    flex: 1;
-    min-width: 0;
-    background: var(--color-bg-soft);
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-s);
-    padding: 6px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-  .mockup-card__icon{
-    position: relative;
-    width: 14px;
-    height: 14px;
-    border-radius: 5px;
-    background: rgba(47, 111, 94, 0.14);
-    border: 1px solid rgba(47, 111, 94, 0.3);
-  }
-  .mockup-card__icon::after{
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 6px;
-    height: 6px;
-    border-radius: 2px;
-    background: var(--color-primary);
-    transform: translate(-50%, -50%);
-  }
-  .mockup-card__line{
-    height: 5px;
-    width: 80%;
-    border-radius: 3px;
-    background: rgba(44, 42, 38, 0.14);
-  }
-  .mockup-card__line--short{ width: 55%; }
 
   .mockup-phone{
     position: absolute;
@@ -569,7 +495,7 @@
     background: var(--color-text);
     border-radius: 16px;
     padding: 5px;
-    box-shadow: var(--shadow-m);
+    box-shadow: var(--shadow-s);
     z-index: 2;
   }
   .mockup-phone__screen{
@@ -577,67 +503,33 @@
     height: 100%;
     background: var(--color-surface);
     border-radius: 11px;
-    padding: 12px 7px 8px;
+    padding: 16px 10px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    justify-content: space-between;
     overflow: hidden;
   }
-  .mockup-phone__nav{
-    flex-shrink: 0;
+  .mockup-real-nav--phone{
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-  .mockup-phone__nav-logo{
-    width: 9px;
-    height: 9px;
-    border-radius: 3px;
-    background: var(--color-primary);
-  }
-  .mockup-phone__nav-menu{
+  .mockup-real-nav--phone .brand-mark{
     width: 13px;
-    height: 7px;
-    border-radius: 2px;
-    background: var(--color-border);
+    height: 13px;
+    color: var(--color-ink);
   }
-  .mockup-bar--phone-title{
-    display: block;
-    height: 6px;
-    width: 70%;
-    border-radius: 3px;
-    background: rgba(44, 42, 38, 0.32);
-  }
-  .mockup-bar--phone-text{
-    display: block;
-    height: 4px;
-    width: 48%;
-    border-radius: 2px;
-    background: rgba(44, 42, 38, 0.14);
-  }
-  .mockup-phone__card{
-    height: 16px;
-    background: var(--color-bg-soft);
-    border: 1px solid var(--color-border);
-    border-radius: 6px;
-  }
-  .mockup-phone__cta{
-    margin-top: auto;
-    width: 60%;
-    height: 11px;
-    border-radius: 999px;
-    background: var(--color-accent);
+  .mockup-real-menu-icon{
     display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    padding-right: 4px;
+    flex-direction: column;
+    gap: 2px;
   }
-  .mockup-phone__cta-arrow{
-    width: 4px;
-    height: 4px;
-    border-top: 1.2px solid #fff;
-    border-right: 1.2px solid #fff;
-    transform: rotate(45deg);
+  .mockup-real-menu-icon i{
+    display: block;
+    width: 12px;
+    height: 1.5px;
+    background: var(--color-ink);
+    border-radius: 1px;
   }
 
   @media (min-width: 900px){
@@ -705,7 +597,7 @@
   .about-card{
     background: var(--color-surface);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-m);
+    border-radius: var(--radius-brand);
     padding: 26px;
   }
   .about-card h3{
@@ -741,7 +633,7 @@
   .service-card{
     background: var(--color-surface);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-m);
+    border-radius: var(--radius-brand);
     padding: 24px;
     box-shadow: var(--shadow-s);
   }
@@ -791,7 +683,7 @@
     display: flex;
     gap: 20px;
     background: var(--color-surface);
-    border-radius: var(--radius-m);
+    border-radius: var(--radius-brand);
     padding: 26px;
     border: 1px solid var(--color-border);
   }
@@ -799,6 +691,7 @@
     flex-shrink: 0;
     font-size: 1.6rem;
     font-weight: 800;
+    letter-spacing: 0.03em;
     color: var(--color-accent);
     font-family: Georgia, "Times New Roman", serif;
   }
@@ -896,7 +789,7 @@
     margin: 0 auto;
     background: var(--color-surface);
     border: 1px solid var(--color-border);
-    border-radius: var(--radius-l);
+    border-radius: var(--radius-brand);
     padding: 32px 24px;
     box-shadow: var(--shadow-s);
   }
@@ -904,7 +797,7 @@
     text-align: center;
     background: rgba(47, 111, 94, 0.06);
     border: 1px solid rgba(47, 111, 94, 0.14);
-    border-radius: var(--radius-m);
+    border-radius: var(--radius-brand);
     padding: 28px 20px;
     margin-bottom: 28px;
   }
@@ -918,6 +811,7 @@
   .price-headline__amount{
     font-size: clamp(2.4rem, 9vw, 3.4rem);
     font-weight: 800;
+    letter-spacing: 0.02em;
     color: var(--color-primary-dark);
     line-height: 1.15;
   }
@@ -1312,16 +1206,19 @@
     width: 96px;
     height: 96px;
     border-radius: 50%;
-    background: var(--color-primary);
-    color: #fff;
+    background: var(--color-surface);
+    border: 1.5px solid var(--color-border);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.8rem;
-    font-weight: 800;
     flex-shrink: 0;
   }
-  /* 顔写真は使用しない方針のため、イニシャルアイコンで代替 */
+  /* 顔写真は使用しない方針のため、丸枠にブランドマーク（KSロゴ）を配置 */
+  .profile-avatar .brand-mark{
+    width: 40px;
+    height: 40px;
+    color: var(--color-ink);
+  }
   .profile-name{
     font-size: 1.2rem;
     font-weight: 800;
@@ -1376,7 +1273,7 @@
     justify-content: center;
     font-weight: 800;
     font-size: 1.02rem;
-    letter-spacing: 0.01em;
+    letter-spacing: 0.03em;
     z-index: 1;
   }
   .flow-item:last-child .flow-num{
@@ -1556,8 +1453,17 @@
     text-align: center;
   }
   .footer-logo{
+    display: flex;
+    align-items: center;
+    gap: 10px;
     font-size: 1.05rem;
     font-weight: 800;
+    letter-spacing: 0.04em;
+    color: #fff;
+  }
+  .footer-logo .brand-mark{
+    width: 26px;
+    height: 26px;
     color: #fff;
   }
   .footer-nav{
@@ -1565,6 +1471,7 @@
     flex-wrap: wrap;
     gap: 16px;
     justify-content: center;
+    letter-spacing: 0.02em;
   }
   .footer-nav a:hover{ color: #fff; }
   .footer-sns{
@@ -1615,7 +1522,9 @@
 <header class="header">
   <div class="header-inner">
     <a href="#top" class="logo" aria-label="KEITA STUDIO トップへ">
-      <span class="logo-mark" aria-hidden="true">K</span>
+      <svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M28 22 L28 78 M28 52 L64 22 M40 52 Q 78 52 78 68 Q 78 84 58 84 Q 44 84 40 70"/>
+      </svg>
       KEITA STUDIO
     </a>
 
@@ -1675,6 +1584,9 @@
   <section id="top" class="hero">
     <div class="container hero-inner">
       <div class="hero-text fade-in">
+        <svg class="brand-mark hero-brand-mark" viewBox="0 0 100 100" aria-hidden="true">
+          <path d="M28 22 L28 78 M28 52 L64 22 M40 52 Q 78 52 78 68 Q 78 84 58 84 Q 44 84 40 70"/>
+        </svg>
         <h1 class="hero-title">ホームページ、<br>そろそろちゃんと<br>しませんか？</h1>
         <p class="hero-sub">個人事業主のためのWeb制作「KEITA STUDIO」</p>
         <p class="hero-desc">
@@ -1693,64 +1605,35 @@
       </div>
 
       <div class="hero-visual fade-in" aria-hidden="true">
-        <!-- KEITA STUDIOの世界観に合わせたオリジナルのダミーWebサイト画面（CSSのみで表現）。
-             実際の制作実績画像を使う場合は、.mockup-browser / .mockup-phone の中身を
-             img タグに差し替えてください。 -->
+        <!-- KEITA STUDIO自身のサイトを簡略化したブラウザ／スマホプレビュー。
+             実際のKSロゴ・配色・CTAデザインのみを使い、要素数を最小限に絞っています。 -->
         <div class="mockup-browser">
           <div class="mockup-browser__bar">
             <span></span><span></span><span></span>
           </div>
           <div class="mockup-browser__body">
-            <div class="mockup-browser__nav">
-              <span class="mockup-browser__logo"></span>
-              <span class="mockup-browser__navlink"></span>
-              <span class="mockup-browser__navlink"></span>
-              <span class="mockup-browser__navlink"></span>
-              <span class="mockup-browser__navcta"></span>
-            </div>
-            <div class="mockup-hero">
-              <div class="mockup-hero__text">
-                <span class="mockup-eyebrow"></span>
-                <span class="mockup-bar mockup-bar--title"></span>
-                <span class="mockup-bar mockup-bar--title-short"></span>
-                <span class="mockup-bar mockup-bar--text"></span>
-                <span class="mockup-cta-pill"><span class="mockup-cta-pill__arrow"></span></span>
-              </div>
-              <div class="mockup-hero__media">
-                <span class="mockup-hero__media-icon"></span>
-              </div>
-            </div>
-            <div class="mockup-cards">
-              <div class="mockup-card">
-                <span class="mockup-card__icon"></span>
-                <span class="mockup-card__line"></span>
-                <span class="mockup-card__line mockup-card__line--short"></span>
-              </div>
-              <div class="mockup-card">
-                <span class="mockup-card__icon"></span>
-                <span class="mockup-card__line"></span>
-                <span class="mockup-card__line mockup-card__line--short"></span>
-              </div>
-              <div class="mockup-card">
-                <span class="mockup-card__icon"></span>
-                <span class="mockup-card__line"></span>
-                <span class="mockup-card__line mockup-card__line--short"></span>
-              </div>
-            </div>
+            <svg class="brand-mark mockup-real-logo" viewBox="0 0 100 100" aria-hidden="true">
+              <path d="M28 22 L28 78 M28 52 L64 22 M40 52 Q 78 52 78 68 Q 78 84 58 84 Q 44 84 40 70"/>
+            </svg>
+            <span class="mockup-real-title"></span>
+            <span class="mockup-real-cta">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 5.86 2 10.6c0 4.24 3.55 7.78 8.35 8.48.33.07.77.22.88.5.1.26.07.66.03.92l-.14.86c-.04.26-.2 1 .87.55 1.08-.46 5.8-3.42 7.92-5.86C21.4 13.9 22 12.3 22 10.6 22 5.86 17.52 2 12 2z"/></svg>
+              LINEで相談する
+            </span>
           </div>
         </div>
 
         <div class="mockup-phone">
           <div class="mockup-phone__screen">
-            <div class="mockup-phone__nav">
-              <span class="mockup-phone__nav-logo"></span>
-              <span class="mockup-phone__nav-menu"></span>
+            <div class="mockup-real-nav--phone">
+              <svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true">
+                <path d="M28 22 L28 78 M28 52 L64 22 M40 52 Q 78 52 78 68 Q 78 84 58 84 Q 44 84 40 70"/>
+              </svg>
+              <span class="mockup-real-menu-icon"><i></i><i></i><i></i></span>
             </div>
-            <span class="mockup-bar--phone-title"></span>
-            <span class="mockup-bar--phone-text"></span>
-            <div class="mockup-phone__card"></div>
-            <div class="mockup-phone__card"></div>
-            <span class="mockup-phone__cta"><span class="mockup-phone__cta-arrow"></span></span>
+            <span class="mockup-real-cta--phone" aria-hidden="true">
+              <svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 5.86 2 10.6c0 4.24 3.55 7.78 8.35 8.48.33.07.77.22.88.5.1.26.07.66.03.92l-.14.86c-.04.26-.2 1 .87.55 1.08-.46 5.8-3.42 7.92-5.86C21.4 13.9 22 12.3 22 10.6 22 5.86 17.52 2 12 2z"/></svg>
+            </span>
           </div>
         </div>
       </div>
@@ -2073,7 +1956,11 @@
       </div>
 
       <div class="profile-wrap fade-in">
-        <div class="profile-avatar" aria-hidden="true">KS</div>
+        <div class="profile-avatar" aria-hidden="true">
+          <svg class="brand-mark" viewBox="0 0 100 100">
+            <path d="M28 22 L28 78 M28 52 L64 22 M40 52 Q 78 52 78 68 Q 78 84 58 84 Q 44 84 40 70"/>
+          </svg>
+        </div>
         <div>
           <p class="profile-name">鈴木 恵太</p>
           <p class="profile-role">KEITA STUDIO 代表 / Web制作者</p>
@@ -2239,7 +2126,12 @@
      ============================================================ -->
 <footer class="footer">
   <div class="container footer-inner">
-    <p class="footer-logo">KEITA STUDIO</p>
+    <p class="footer-logo">
+      <svg class="brand-mark" viewBox="0 0 100 100" aria-hidden="true">
+        <path d="M28 22 L28 78 M28 52 L64 22 M40 52 Q 78 52 78 68 Q 78 84 58 84 Q 44 84 40 70"/>
+      </svg>
+      KEITA STUDIO
+    </p>
 
     <nav class="footer-nav" aria-label="フッターナビゲーション">
       <a href="#about">About</a>
