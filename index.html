@@ -657,14 +657,14 @@
     padding: 26px 24px 24px;
     box-shadow: var(--shadow-s);
   }
-  /* 【正式採用】アイコンを控えめな単色マーク(32px)にし、見出しの下に細い罫線を挟んで
-     ヘッダー部分と説明文の距離を整理する */
+  /* 【正式採用】アイコン+タイトルを横並びにし、幅いっぱいの細い罫線でヘッダー部分と
+     説明文を区切ることで、カード内の横方向の構造を強くする */
   .service-card__head{
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 16px;
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
   }
   .service-icon{
     width: 32px;
@@ -680,10 +680,10 @@
     font-weight: 700;
   }
   .service-card__rule{
-    width: 28px;
-    height: 2px;
+    width: 100%;
+    height: 1px;
     background: var(--color-border);
-    margin-bottom: 16px;
+    margin-bottom: 18px;
   }
   .service-card p{
     font-size: 0.97rem;
