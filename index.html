@@ -95,6 +95,12 @@
   h1,h2,h3,h4,p{ margin: 0; }
   button{ font-family: inherit; }
 
+  /* 【可読性】見出しは行の均等バランス、本文は孤立文字（1〜2文字だけの改行）を
+     ブラウザ側で自動調整。対応ブラウザのみ効く進行的強化で、非対応環境では
+     従来どおりの折り返しになる（レイアウト・文言は一切変わらない） */
+  h1,h2,h3{ text-wrap: balance; }
+  p{ text-wrap: pretty; }
+
   /* フォーカス表示（アクセシビリティ） */
   a:focus-visible,
   button:focus-visible,
@@ -607,14 +613,16 @@
     margin-bottom: 10px;
   }
   .about-card p{
-    color: var(--color-text-sub);
-    font-size: 0.95rem;
+    color: var(--color-text);
+    font-size: 0.99rem;
+    letter-spacing: 0.02em;
   }
   .about-lead{
-    max-width: 720px;
+    max-width: 640px;
     margin: 0 auto 36px;
     text-align: center;
-    font-size: 1rem;
+    font-size: 1.03rem;
+    letter-spacing: 0.01em;
     color: var(--color-text);
   }
 
@@ -654,14 +662,16 @@
     margin-bottom: 8px;
   }
   .service-card p{
-    font-size: 0.92rem;
-    color: var(--color-text-sub);
+    font-size: 0.97rem;
+    line-height: 1.8;
+    letter-spacing: 0.02em;
+    color: var(--color-text);
   }
   .service-note{
     text-align: center;
     margin-top: 28px;
     color: var(--color-text-sub);
-    font-size: 0.88rem;
+    font-size: 0.9rem;
   }
 
   @media (min-width: 640px){
@@ -678,6 +688,8 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
+    max-width: 640px;
+    margin: 0 auto;
   }
   .strength-item{
     display: flex;
@@ -701,13 +713,14 @@
     margin-bottom: 10px;
   }
   .strength-item p{
-    font-size: 0.94rem;
+    font-size: 0.99rem;
     line-height: 1.8;
-    color: var(--color-text-sub);
+    letter-spacing: 0.02em;
+    color: var(--color-text);
   }
 
   @media (min-width: 900px){
-    .strength-list{ grid-template-columns: repeat(3, 1fr); }
+    .strength-list{ grid-template-columns: repeat(3, 1fr); max-width: none; }
     .strength-item{ flex-direction: column; gap: 12px; }
   }
 
@@ -1318,9 +1331,10 @@
     margin-bottom: 6px;
   }
   .flow-content p{
-    font-size: 0.92rem;
+    font-size: 0.98rem;
     line-height: 1.8;
-    color: var(--color-text-sub);
+    letter-spacing: 0.02em;
+    color: var(--color-text);
   }
 
   /* ============================================================
@@ -1344,7 +1358,9 @@
     cursor: pointer;
     padding: 18px 50px 18px 20px;
     font-weight: 700;
-    font-size: 0.96rem;
+    font-size: 1rem;
+    line-height: 1.6;
+    text-wrap: pretty;
     position: relative;
     display: flex;
     align-items: center;
@@ -1390,9 +1406,10 @@
   .faq-item[open] .faq-toggle-icon::after{ opacity: 0; }
   .faq-answer{
     padding: 0 20px 20px 58px;
-    font-size: 0.9rem;
+    font-size: 0.97rem;
     line-height: 1.8;
-    color: var(--color-text-sub);
+    letter-spacing: 0.02em;
+    color: var(--color-text);
   }
   .faq-sim-cta{
     margin: -6px 20px 20px 58px;
@@ -1809,7 +1826,7 @@
         <div class="strength-item fade-in">
           <span class="strength-num" aria-hidden="true">01</span>
           <div>
-            <h3>相談から公開まで、同じ人が対応</h3>
+            <h3>ご相談から公開まで、<br>代表者本人が一貫して対応</h3>
             <p>ご相談から制作、公開まで、代表者本人が対応します。途中で担当者が変わらないので、気になったこともそのままご相談いただけます。</p>
           </div>
         </div>
