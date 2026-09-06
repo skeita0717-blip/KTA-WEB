@@ -321,15 +321,26 @@
   }
 
   /* モバイルメニュー */
+  /* 【改善】inset指定を明示的なtop/left/right/bottomに変更（一部環境でのinset未反映対策）。
+     上下の余白・項目間の余白・行間を圧縮し、スクロールなしで全項目が収まるようにした */
+  /* 【改善】画面全体を覆う形から、右側から出るコンパクトなパネルに変更。
+     幅は280px固定（極端に狭い画面向けに82vwを上限としても指定）。
+     左側には元のページがそのまま見える。境界は罫線と影のみで表現し、
+     新たな装飾は追加していない */
   .mobile-menu{
     position: fixed;
-    inset: var(--header-h) 0 0 0;
+    top: var(--header-h);
+    right: 0;
+    bottom: 0;
+    width: min(280px, 82vw);
     background: var(--color-bg);
+    border-left: 1px solid var(--color-border);
+    box-shadow: -8px 0 24px rgba(44, 42, 38, 0.08);
     z-index: 999;
     transform: translateX(100%);
     transition: transform 0.28s ease;
     overflow-y: auto;
-    padding: 32px 24px 40px;
+    padding: 20px 24px 20px;
   }
   .mobile-menu.is-open{
     transform: translateX(0);
@@ -337,17 +348,18 @@
   .mobile-menu ul{
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 2px;
   }
   .mobile-menu a{
     display: block;
-    padding: 16px 8px;
+    padding: 12px 8px;
     font-size: 1.05rem;
     font-weight: 700;
+    line-height: 1.3;
     border-bottom: 1px solid var(--color-border);
   }
   .mobile-menu-cta{
-    margin-top: 28px;
+    margin-top: 18px;
   }
 
   body.menu-open{
@@ -1600,27 +1612,33 @@
       </button>
     </div>
   </div>
-
-  <!-- モバイルメニュー -->
-  <nav class="mobile-menu" id="mobileMenu" aria-label="モバイルナビゲーション">
-    <ul>
-      <li><a href="#about">About</a></li>
-      <li><a href="#service">Service</a></li>
-      <!-- Works非公開中のため一時非表示。実績掲載を再開したら style="display:none;" を削除してください -->
-      <li style="display:none;"><a href="#works">Works</a></li>
-      <li><a href="#price">Price</a></li>
-      <li><a href="#profile">Profile</a></li>
-      <li><a href="#flow">Flow</a></li>
-      <li><a href="#faq">FAQ</a></li>
-    </ul>
-    <div class="mobile-menu-cta">
-      <a class="btn btn-line btn-block js-line-link" href="https://lin.ee/yySJajb" target="_blank" rel="noopener noreferrer">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 5.86 2 10.6c0 4.24 3.55 7.78 8.35 8.48.33.07.77.22.88.5.1.26.07.66.03.92l-.14.86c-.04.26-.2 1 .87.55 1.08-.46 5.8-3.42 7.92-5.86C21.4 13.9 22 12.3 22 10.6 22 5.86 17.52 2 12 2z"/></svg>
-        LINEで相談する
-      </a>
-    </div>
-  </nav>
 </header>
+
+<!-- モバイルメニュー
+     【改善】header要素の外（bodyの直下）に配置。
+     header に backdrop-filter が指定されていると、その内側にある
+     position:fixed 要素は「画面全体」ではなく「headerの高さ」を基準に
+     配置されてしまうため（backdrop-filterが新しい包含ブロックを作るため）、
+     メニューが本来の高さを取れず、内部スクロールが発生する原因になっていた。
+     header の外に出すことで、画面全体を基準にした本来の高さを確保する。 -->
+<nav class="mobile-menu" id="mobileMenu" aria-label="モバイルナビゲーション">
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#service">Service</a></li>
+    <!-- Works非公開中のため一時非表示。実績掲載を再開したら style="display:none;" を削除してください -->
+    <li style="display:none;"><a href="#works">Works</a></li>
+    <li><a href="#price">Price</a></li>
+    <li><a href="#profile">Profile</a></li>
+    <li><a href="#flow">Flow</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <div class="mobile-menu-cta">
+    <a class="btn btn-line btn-block js-line-link" href="https://lin.ee/yySJajb" target="_blank" rel="noopener noreferrer">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 5.86 2 10.6c0 4.24 3.55 7.78 8.35 8.48.33.07.77.22.88.5.1.26.07.66.03.92l-.14.86c-.04.26-.2 1 .87.55 1.08-.46 5.8-3.42 7.92-5.86C21.4 13.9 22 12.3 22 10.6 22 5.86 17.52 2 12 2z"/></svg>
+      LINEで相談する
+    </a>
+  </div>
+</nav>
 
 <main id="main">
 
