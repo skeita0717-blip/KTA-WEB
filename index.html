@@ -29,6 +29,11 @@
 <!-- <link rel="icon" href="favicon.ico"> -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='20' fill='%232F6F5E'/%3E%3Ctext x='50' y='68' font-size='55' fill='white' text-anchor='middle' font-family='sans-serif' font-weight='bold'%3EK%3C/text%3E%3C/svg%3E">
 
+<!-- FAQ Qマーク専用のエディトリアル書体（Fraunces） -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,600&display=swap">
+
 <style>
   /* ============================================================
      ルート変数（カラー・フォント・共通値）
@@ -50,6 +55,7 @@
     --color-ink: #211F1B;         /* ブランドマーク・ロゴ専用の深い黒（本文色より一段濃い） */
 
     --font-base: "Hiragino Sans", "Yu Gothic", "Noto Sans JP", "Helvetica Neue", Arial, sans-serif;
+    --font-serif: "Fraunces", Georgia, "Times New Roman", serif; /* FAQ Qマーク専用 */
 
     --radius-s: 8px;
     --radius-m: 16px;
@@ -1321,18 +1327,17 @@
     gap: 12px;
   }
   .faq-item summary::-webkit-details-marker{ display: none; }
+  /* 円バッジを外し、セリフ体の「Q」のみで視認性を優先（ブランド表現より質問マークとしての分かりやすさを優先） */
   .faq-q-mark{
     flex-shrink: 0;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: rgba(47,111,94,0.10);
+    width: 24px;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-weight: 600;
+    font-size: 1.3rem;
+    line-height: 1;
     color: var(--color-primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 0.85rem;
+    text-align: center;
   }
   .faq-toggle-icon{
     position: absolute;
